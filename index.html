@@ -472,7 +472,8 @@ const DEFAULT_RESIDENTS=[
 
 // ═══════════════ API ═══════════════
 async function api(params){
-  if(!apiUrl) return {ok:false,error:'no_api'};
+  const localMode = !apiUrl || apiUrl.includes('github.io') || apiUrl.includes('github.com');
+  if(localMode) return {ok:false,error:'no_api'};
   setSyncing(true);
   try{
     const url=new URL(apiUrl);
@@ -497,8 +498,9 @@ async function doLogin(){
   const password=document.getElementById('passwordInput').value;
   document.getElementById('loginErr').style.display='none';
   if(!login||!password){showLoginErr('Veuillez remplir tous les champs');return;}
-  if(!apiUrl){
-    // Local mode
+  // Mode local si pas d'API configurée OU si hébergé sur GitHub Pages (pas Apps Script)
+  const isLocalMode = !apiUrl || apiUrl.includes('github.io') || apiUrl.includes('github.com');
+  if(isLocalMode){
     const saved=JSON.parse(localStorage.getItem('dermaUsers')||'[]');
     const list=saved.length?saved:[{login:'admin',password:'admin123',role:'admin',nom:'Chef de Service',id:'local_admin'}];
     const u=list.find(x=>x.login===login&&(x.password===password||(x.password_hash&&x.password_hash===simpleHash(password))));
