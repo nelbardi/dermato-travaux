@@ -1,0 +1,24 @@
+{
+  "name": "Dermatologie \u2014 Travaux Scientifiques",
+  "short_name": "Dermato",
+  "description": "Gestion des travaux scientifiques \u2014 Service de Dermatologie CHU",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d2240",
+  "theme_color": "#0d2240",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
