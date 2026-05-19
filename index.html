@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0d2240">
 <meta name="mobile-web-app-capable" content="yes">
@@ -908,14 +911,17 @@ function exportPDF(){
 function exportWord(){
   const rows=travaux.map(t=>`<tr>${[String(t.id).slice(-6),t.intitule,t.resident||'—',t.superviseur,t.evenement||'—',t.date_soumission||t.date||'—',t.notes||'—',(t.statut||'pending')==='submitted'?'✅ Soumis':'⏳ En attente'].map(v=>`<td style="border:1px solid #ccc;padding:5px;">${v}</td>`).join('')}</tr>`).join('');
   const html=`<html><head><meta charset="utf-8"><style>body{font-family:Calibri,sans-serif;font-size:10pt;}h1{color:#0d2240;}th{background:#0d2240;color:white;padding:5px;}table{border-collapse:collapse;width:100%;}td{font-size:9pt;}</style></head><body><h1>Service de Dermatologie — Travaux Scientifiques</h1><p style="color:#666;">Édité le ${new Date().toLocaleDateString('fr-FR')} | ${travaux.length} travaux</p><hr><table><thead><tr>${['#','Intitulé','Résident','Superviseur','Événement','Date soumission','Notes','Statut'].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table><p style="margin-top:15px;font-size:8pt;color:#666;">${profs.map(p=>`${p} : ${travaux.filter(t=>t.superviseur===p).length} travaux`).join(' | ')}</p><script>
+// Désactiver et supprimer tout service worker existant pour forcer le rechargement
 if('serviceWorker' in navigator){
-  window.addEventListener('load', function(){
-    navigator.serviceWorker.register('sw.js').then(function(reg){
-      console.log('SW registered');
-    }).catch(function(err){
-      console.log('SW error', err);
-    });
+  navigator.serviceWorker.getRegistrations().then(function(registrations){
+    registrations.forEach(function(reg){ reg.unregister(); });
   });
+  // Vider tous les caches
+  if('caches' in window){
+    caches.keys().then(function(names){
+      names.forEach(function(name){ caches.delete(name); });
+    });
+  }
 }
 </script>
 </body></html>`;
