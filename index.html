@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d2240">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dermato">
+<meta name="description" content="Gestion des travaux scientifiques du Service de Dermatologie CHU">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Service de Dermatologie — Travaux Scientifiques</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1271,6 +1280,15 @@ window.addEventListener('beforeunload', function() {
 });
 // Ne pas restaurer la session → toujours démarrer sur le login
 // checkSavedSession(); // Désactivé intentionnellement
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js')
+      .then(function(r){ console.log('SW OK'); })
+      .catch(function(e){ console.log('SW error', e); });
+  });
+}
 </script>
 </body>
 </html>
