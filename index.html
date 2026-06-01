@@ -207,6 +207,17 @@ tbody td{padding:10px 12px;vertical-align:middle;}
 </head>
 <body>
 
+<script>
+// Redirection automatique vers Apps Script si ouvert depuis GitHub Pages
+(function(){
+  var url = window.location.href;
+  var appsScriptUrl = 'https://script.google.com/macros/s/AKfycbxn_GI8rZBQVYOWRsgZ8Lp3LTA7T7aM8x4eb9JXxW9dp1XYhrtqYdZmE1wNSXiKFg20/exec';
+  if(url.includes('github.io')){
+    window.location.replace(appsScriptUrl);
+  }
+})();
+</script>
+
 <div class="loading-overlay" id="loadingOverlay">
   <div style="text-align:center;">
     <div class="spinner"></div>
